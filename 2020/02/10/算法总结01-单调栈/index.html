@@ -18,7 +18,7 @@
 <meta property="og:site_name" content="笙歌流转">
 <meta property="og:description" content="裸题给定序列 $a1$,$a2$…$an$，对于序列中的每个元素，求出其左边第一个比他小的元素的下标。 求解算法为单调栈，核心代码如下：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-02-11T12:00:21.036Z">
+<meta property="og:updated_time" content="2020-02-11T12:09:24.374Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法总结01-单调栈">
 <meta name="twitter:description" content="裸题给定序列 $a1$,$a2$…$an$，对于序列中的每个元素，求出其左边第一个比他小的元素的下标。 求解算法为单调栈，核心代码如下：">
@@ -222,7 +222,7 @@
 <h3 id="更进一步的思考"><a href="#更进一步的思考" class="headerlink" title="更进一步的思考"></a>更进一步的思考</h3><p>是什么导致了单调栈算法的成立呢？</p>
 <p>从更加抽象的层面思考，假设对于集合$T$存在操作$op$，$\forall i,j \in T,op(i,j)\in { b_0,b_1,…b_m }$;给定序列$a_1$,$a_2$,…$a_n$满足$\forall i, a_i \in T$。对于序列中的每个元素$a_i$，求元素$a_j$，$a_j$为$a_i$左边第一个满足$op(a_i,a_j) {=} b_0$的元素。</p>
 <p>显然，当以下条件满足时，单调栈算法可以解决该问题：<br>$$\forall i&lt;j&lt;k \in {1,2…n},if , op(a_i,a_j) \neq b_0 \And op(a_j,a_k)\neq b_0, then , op(a_i,a_k) \neq b_0$$</p>
-<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>给定点$p$，坐标为$(0,h)$；给定点序列$a_1=(x_1,y_1)$,$a_2=(x_2,y_2)$…$a_n=(x_n,y_n)$，满足$x_1 {&lt;} x2 {&lt;} … {&lt;} x_n$。对于每个点$a_i$，求点$a_j$，$a_j$为$a_i$左边第一个使得线段$p - a_i$和线段$p-(0,y_j)$有交点的元素。</p>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>给定点$p$，坐标为$(0,h)$；给定点序列$a_1=(x_1,y_1)$,$a_2=(x_2,y_2)$…$a_n=(x_n,y_n)$，满足$x_1 {&lt;} x2 {&lt;} … {&lt;} x_n$，$h&gt;max{y_1,y_2…y_n}$。对于每个点$a_i$，求点$a_j$，$a_j$为$a_i$左边第一个使得线段$p - a_i$和线段$a_j-(0,y_j)$有交点的元素。</p>
 <h3 id="其他例题"><a href="#其他例题" class="headerlink" title="其他例题"></a>其他例题</h3><ul>
 <li><a href="https://www.luogu.com.cn/problem/P1901" target="_blank" rel="noopener">https://www.luogu.com.cn/problem/P1901</a></li>
 <li><a href="https://www.luogu.com.cn/problem/P1823" target="_blank" rel="noopener">https://www.luogu.com.cn/problem/P1823</a></li>
@@ -567,14 +567,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">单调栈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">教女朋友写代码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">dance link</a>
               </li>
              
@@ -584,6 +576,14 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">双向十字循环链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">单调栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">教女朋友写代码</a>
               </li>
             
             <div class="clearfix"></div>
