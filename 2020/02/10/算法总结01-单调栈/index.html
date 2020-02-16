@@ -18,7 +18,7 @@
 <meta property="og:site_name" content="笙歌流转">
 <meta property="og:description" content="裸题给定序列 $a1$,$a2$…$an$，对于序列中的每个元素，求出其左边第一个比他小的元素的下标。 求解算法为单调栈，核心代码如下：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-02-16T02:59:35.780Z">
+<meta property="og:updated_time" content="2020-02-16T14:43:23.997Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法总结01-单调栈">
 <meta name="twitter:description" content="裸题给定序列 $a1$,$a2$…$an$，对于序列中的每个元素，求出其左边第一个比他小的元素的下标。 求解算法为单调栈，核心代码如下：">
@@ -215,7 +215,7 @@
 <p>求解算法为单调栈，核心代码如下：</p>
 <a id="more"></a> 
 
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sol</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; a,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp;ans)</span></span>&#123;</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; stk;</span><br><span class="line">    <span class="keyword">int</span> n=a.<span class="built_in">size</span>();</span><br><span class="line">    ans.resize(a.<span class="built_in">size</span>());</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;++i)&#123;</span><br><span class="line">        <span class="keyword">while</span> ((!stk.empty())&amp;&amp;a[i]&lt;=a[stk.top()])</span><br><span class="line">            stk.pop();</span><br><span class="line">        ans[i]=(stk.empty()?<span class="number">-1</span>:stk.top());</span><br><span class="line">        stk.push(i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sol</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; a, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; ans)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; stk;</span><br><span class="line">    <span class="keyword">int</span> n = a.<span class="built_in">size</span>();</span><br><span class="line">    ans.resize(a.<span class="built_in">size</span>());</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">        <span class="keyword">while</span> ((!stk.empty()) &amp;&amp; a[i] &lt;= a[stk.top()]) stk.pop();</span><br><span class="line">        ans[i] = (stk.empty() ? <span class="number">-1</span> : stk.top());</span><br><span class="line">        stk.push(i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="时空复杂度分析"><a href="#时空复杂度分析" class="headerlink" title="时空复杂度分析"></a>时空复杂度分析</h3><p>空间复杂度显然为$O(n)$</p>
 <p>考虑到每个元素仅入栈一次，因此时间复杂度也是$O(n)$。</p>
@@ -576,6 +576,14 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">单调栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">教女朋友写代码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">dance link</a>
               </li>
              
@@ -585,14 +593,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">双向十字循环链表</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">单调栈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">教女朋友写代码</a>
               </li>
              
               <li class="article-tag-list-item">
