@@ -6,25 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="">
-  <title>笙歌流转</title>
+  <title>算法总结02-树形DP | 笙歌流转</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-    
-    <!-- <meta name="keywords" content="算法，计算机视觉，日常">
-    <meta name="description" content="笙歌流转的博客"> -->
-  
-  <meta name="description" content="笙歌流转的博客">
-<meta name="keywords" content="算法，计算机视觉，日常">
-<meta property="og:type" content="website">
-<meta property="og:title" content="笙歌流转">
-<meta property="og:url" content="/index.html">
+  <meta name="description" content="口胡的原理通常树形DP的思路，是从递归的角度看，将子树看成一个子节点，从而将树上DP的问题转化为普通的线性DP；子树的信息通过后序遍历或者记忆化搜索（其实是一样的，写法不同）提供，避免重复计算。">
+<meta name="keywords" content="教女朋友写代码,DP,DFS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法总结02-树形DP">
+<meta property="og:url" content="/2020/02/16/算法总结02-树形DP/index.html">
 <meta property="og:site_name" content="笙歌流转">
-<meta property="og:description" content="笙歌流转的博客">
+<meta property="og:description" content="口胡的原理通常树形DP的思路，是从递归的角度看，将子树看成一个子节点，从而将树上DP的问题转化为普通的线性DP；子树的信息通过后序遍历或者记忆化搜索（其实是一样的，写法不同）提供，避免重复计算。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-02-16T14:37:21.627Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="笙歌流转">
-<meta name="twitter:description" content="笙歌流转的博客">
+<meta name="twitter:title" content="算法总结02-树形DP">
+<meta name="twitter:description" content="口胡的原理通常树形DP的思路，是从递归的角度看，将子树看成一个子节点，从而将树上DP的问题转化为普通的线性DP；子树的信息通过后序遍历或者记忆化搜索（其实是一样的，写法不同）提供，避免重复计算。">
   
     <link rel="alternative" href="/atom.xml" title="笙歌流转" type="application/atom+xml">
   
@@ -185,25 +182,25 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-
-  
-    <article id="post-算法总结02-树形DP" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-算法总结02-树形DP" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/02/16/算法总结02-树形DP/">算法总结02-树形DP</a>
-	
+    <h1 class="article-title" itemprop="name">
+      算法总结02-树形DP
     </h1>
   
 
 
   
   
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
 <a href="/2020/02/16/算法总结02-树形DP/" class="archive-article-date">
         <time datetime="2020-02-16T14:22:33.865Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-16</time>
 </a>
@@ -215,9 +212,30 @@
   <div class="article-entry" itemprop="articleBody">
     
     <h3 id="口胡的原理"><a href="#口胡的原理" class="headerlink" title="口胡的原理"></a>口胡的原理</h3><p>通常树形DP的思路，是从递归的角度看，将子树看成一个子节点，从而将树上DP的问题转化为普通的线性DP；子树的信息通过后序遍历或者记忆化搜索（其实是一样的，写法不同）提供，避免重复计算。</p>
-    
-    <a class="article-more-a" href="/2020/02/16/算法总结02-树形DP/#more">more >></a>
-    
+<a id="more"></a> 
+
+
+<h3 id="简单的例子"><a href="#简单的例子" class="headerlink" title="简单的例子"></a>简单的例子</h3><ul>
+<li>题目链接：<a href="http://hihocoder.com/problemset/problem/1055" target="_blank" rel="noopener">http://hihocoder.com/problemset/problem/1055</a></li>
+<li>思路：将子树看成一个子节点后，就是一个分组背包的问题</li>
+<li>核心代码：<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    visited[i] = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; e[i].<span class="built_in">size</span>(); ++j)</span><br><span class="line">        <span class="keyword">if</span> (visited[e[i][j]] == <span class="literal">false</span>) &#123;</span><br><span class="line">            dfs(e[i][j]);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> vv = m - <span class="number">1</span>; vv &gt; <span class="number">0</span>; --vv)</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> k = m - <span class="number">1</span>; k &gt; <span class="number">0</span>; --k)</span><br><span class="line">                    <span class="keyword">if</span> (vv &gt;= k)</span><br><span class="line">                        dp[i][vv] =</span><br><span class="line">                            <span class="built_in">max</span>(dp[i][vv], dp[i][vv - k] + dp[e[i][j]][k]);</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> vv = m; vv &gt; <span class="number">0</span>; --vv) dp[i][vv] = dp[i][vv - <span class="number">1</span>] + v[i];</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="复杂的例子"><a href="#复杂的例子" class="headerlink" title="复杂的例子"></a>复杂的例子</h3><ul>
+<li><p>题目链接：<a href="http://hihocoder.com/problemset/problem/1035" target="_blank" rel="noopener">http://hihocoder.com/problemset/problem/1035</a></p>
+</li>
+<li><p>思路：在节点$i$处，按照开始遍历之前，和遍历完成之后，人和车是否在$i$,可以划分出5种状态。思路不难，但极其繁杂，考验Debug能力…</p>
+</li>
+<li><p>很久之前写的记忆化搜索暴力版：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n, m;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> max_n = <span class="number">1e6</span> + <span class="number">10</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> to;</span><br><span class="line">    ll c0, c1;</span><br><span class="line">    Node(<span class="keyword">int</span> to_, ll c0_, ll c1_) : to(to_), c0(c0_), c1(c1_) &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">vector</span>&lt;Node&gt; a[max_n], tree[max_n];</span><br><span class="line"><span class="keyword">int</span> b[max_n];</span><br><span class="line"><span class="keyword">bool</span> used[max_n];</span><br><span class="line"><span class="keyword">int</span> Knode[max_n];</span><br><span class="line"><span class="keyword">bool</span> isRequire[max_n];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    used[i] = <span class="literal">true</span>;</span><br><span class="line">    Knode[i] = isRequire[i];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>, siz = a[i].<span class="built_in">size</span>(); j &lt; siz; ++j)</span><br><span class="line">        <span class="keyword">if</span> (!used[a[i][j].to]) &#123;</span><br><span class="line">            dfs(a[i][j].to);</span><br><span class="line">            <span class="keyword">if</span> (Knode[a[i][j].to]) &#123;</span><br><span class="line">                tree[i].push_back(a[i][j]);</span><br><span class="line">                Knode[i] += Knode[a[i][j].to];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line">ll dp[max_n][<span class="number">5</span>];</span><br><span class="line"><span class="keyword">bool</span> soled[max_n][<span class="number">5</span>];</span><br><span class="line"><span class="function">ll <span class="title">sol</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> stats)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (soled[i][stats]) <span class="keyword">return</span> dp[i][stats];</span><br><span class="line">    soled[i][stats] = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">if</span> (tree[i].<span class="built_in">size</span>() == <span class="number">0</span>) <span class="keyword">return</span> dp[i][stats] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (stats == <span class="number">0</span>) &#123;  <span class="comment">//有车去，有车回</span></span><br><span class="line">        dp[i][stats] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>, siz = tree[i].<span class="built_in">size</span>(); j &lt; siz; ++j)</span><br><span class="line">            dp[i][stats] += <span class="built_in">min</span>(sol(tree[i][j].to, <span class="number">0</span>) + tree[i][j].c1 * <span class="number">2</span>,</span><br><span class="line">                                sol(tree[i][j].to, <span class="number">1</span>) + tree[i][j].c0 * <span class="number">2</span>);</span><br><span class="line">        <span class="keyword">return</span> dp[i][stats];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (stats == <span class="number">1</span>) &#123;  <span class="comment">//人去，人回</span></span><br><span class="line">        dp[i][stats] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>, siz = tree[i].<span class="built_in">size</span>(); j &lt; siz; ++j)</span><br><span class="line">            dp[i][stats] += sol(tree[i][j].to, <span class="number">1</span>) + tree[i][j].c0 * <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">return</span> dp[i][stats];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (stats == <span class="number">2</span>) &#123;  <span class="comment">//人去，不回</span></span><br><span class="line">        dp[i][stats] = <span class="number">0</span>;</span><br><span class="line">        ll mmin = <span class="number">1e18</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>, siz = tree[i].<span class="built_in">size</span>(); j &lt; siz; ++j) &#123;</span><br><span class="line">            dp[i][stats] += sol(tree[i][j].to, <span class="number">1</span>) + tree[i][j].c0 * <span class="number">2</span>;</span><br><span class="line">            mmin = <span class="built_in">min</span>(mmin, -(sol(tree[i][j].to, <span class="number">1</span>) + tree[i][j].c0 * <span class="number">2</span>) +</span><br><span class="line">                                 sol(tree[i][j].to, <span class="number">2</span>) + tree[i][j].c0);</span><br><span class="line">        &#125;</span><br><span class="line">        dp[i][stats] += mmin;</span><br><span class="line">        <span class="keyword">return</span> dp[i][stats];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (stats == <span class="number">3</span>) &#123;  <span class="comment">//带着车去，没有车回</span></span><br><span class="line">        dp[i][stats] = <span class="number">0</span>;</span><br><span class="line">        ll mmin = <span class="number">1e18</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>, siz = tree[i].<span class="built_in">size</span>(); j &lt; siz; ++j) &#123;</span><br><span class="line">            ll bycar = sol(tree[i][j].to, <span class="number">1</span>) + tree[i][j].c0 * <span class="number">2</span>,</span><br><span class="line">               byfoot = sol(tree[i][j].to, <span class="number">0</span>) + tree[i][j].c1 * <span class="number">2</span>;</span><br><span class="line">            mmin = <span class="built_in">min</span>(mmin,</span><br><span class="line">                       -<span class="built_in">min</span>(bycar, byfoot) +</span><br><span class="line">                           <span class="built_in">min</span>(sol(tree[i][j].to, <span class="number">3</span>), sol(tree[i][j].to, <span class="number">0</span>)) +</span><br><span class="line">                           tree[i][j].c0 + tree[i][j].c1);</span><br><span class="line">            dp[i][stats] += <span class="built_in">min</span>(bycar, byfoot);</span><br><span class="line">        &#125;</span><br><span class="line">        dp[i][stats] += mmin;</span><br><span class="line">        <span class="keyword">return</span> dp[i][stats];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (stats == <span class="number">4</span>) &#123;  <span class="comment">//带着车一去不回</span></span><br><span class="line">        ll mmin = <span class="number">1e18</span>, ans1 = <span class="number">0</span>, ans2 = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        pair&lt;<span class="keyword">int</span>, ll&gt; theMin = make_pair(<span class="number">-1</span>, <span class="number">1e18</span>),</span><br><span class="line">                      theSec = make_pair(<span class="number">-1</span>, <span class="number">1e18</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>, siz = tree[i].<span class="built_in">size</span>(); j &lt; siz; ++j) &#123;</span><br><span class="line">            ll bycar = sol(tree[i][j].to, <span class="number">1</span>) + tree[i][j].c0 * <span class="number">2</span>,</span><br><span class="line">               byfoot = sol(tree[i][j].to, <span class="number">0</span>) + tree[i][j].c1 * <span class="number">2</span>;</span><br><span class="line">            mmin = <span class="built_in">min</span>(mmin, -<span class="built_in">min</span>(bycar, byfoot) + sol(tree[i][j].to, <span class="number">4</span>) +</span><br><span class="line">                                 tree[i][j].c1);</span><br><span class="line">            ans1 += <span class="built_in">min</span>(bycar, byfoot);</span><br><span class="line"></span><br><span class="line">            ll temp = -<span class="built_in">min</span>(bycar, byfoot) +</span><br><span class="line">                      <span class="built_in">min</span>(sol(tree[i][j].to, <span class="number">3</span>), sol(tree[i][j].to, <span class="number">0</span>)) +</span><br><span class="line">                      tree[i][j].c0 + tree[i][j].c1;</span><br><span class="line">            <span class="keyword">if</span> (temp &lt; theMin.second) &#123;</span><br><span class="line">                theSec = theMin;</span><br><span class="line">                theMin.first = j, theMin.second = temp;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (temp &lt; theSec.second)</span><br><span class="line">                    theSec.first = j, theSec.second = temp;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ans2 = ans1;</span><br><span class="line">        ans1 += mmin;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>, siz = tree[i].<span class="built_in">size</span>(); j &lt; siz; ++j) &#123;</span><br><span class="line">            ll ans3 = ans2;</span><br><span class="line">            ll bycar = sol(tree[i][j].to, <span class="number">1</span>) + tree[i][j].c0 * <span class="number">2</span>,</span><br><span class="line">               byfoot = sol(tree[i][j].to, <span class="number">0</span>) + tree[i][j].c1 * <span class="number">2</span>;</span><br><span class="line">            ans3 +=</span><br><span class="line">                (-<span class="built_in">min</span>(bycar, byfoot) + sol(tree[i][j].to, <span class="number">2</span>) + tree[i][j].c0);</span><br><span class="line">            <span class="keyword">if</span> (j != theMin.first)</span><br><span class="line">                ans3 += <span class="built_in">min</span>(theMin.second, (ll)<span class="number">0</span>);</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                ans3 += <span class="built_in">min</span>(theSec.second, (ll)<span class="number">0</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            ans1 = <span class="built_in">min</span>(ans1, ans3);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[i][stats] = ans1;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, u, v; i &lt; n - <span class="number">1</span>; ++i) &#123;</span><br><span class="line">        ll c0, c1;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d%d%lld%lld"</span>, &amp;u, &amp;v, &amp;c0, &amp;c1);</span><br><span class="line">        a[u].push_back(Node(v, c0, c1));</span><br><span class="line">        a[v].push_back(Node(u, c0, c1));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;m);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, j; i &lt; m; ++i) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;j);</span><br><span class="line">        isRequire[j] = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    dfs(<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; sol(<span class="number">1</span>, <span class="number">4</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>稍微优化的后序遍历代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> max_n = <span class="number">1e6</span> + <span class="number">10</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line">ll f[max_n][<span class="number">5</span>];</span><br><span class="line"><span class="keyword">bool</span> used[max_n];</span><br><span class="line"><span class="keyword">int</span> n, m;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> p, c0, c1;</span><br><span class="line">    Node(<span class="keyword">int</span> p_, <span class="keyword">int</span> c0_, <span class="keyword">int</span> c1_) : p(p_), c0(c0_), c1(c1_) &#123;&#125;</span><br><span class="line">    Node() &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">vector</span>&lt;Node&gt; tree[max_n];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> p, <span class="keyword">int</span> fa)</span> </span>&#123;  <span class="comment">// 0:步行去、回 1:有车去、回有车 2、步行去、不回</span></span><br><span class="line">    <span class="comment">// 3、有车去、回无车  4、有车去、不回</span></span><br><span class="line">    ll min1 = <span class="number">0</span>, min2 = <span class="number">0</span>;</span><br><span class="line">    pair&lt;<span class="keyword">int</span>, ll&gt; min3[<span class="number">2</span>] = &#123;make_pair(<span class="number">-1</span>, <span class="number">0</span>), make_pair(<span class="number">-1</span>, <span class="number">0</span>)&#125;,</span><br><span class="line">                  min4[<span class="number">2</span>] = &#123;make_pair(<span class="number">-1</span>, <span class="number">0</span>), make_pair(<span class="number">-1</span>, <span class="number">0</span>)&#125;;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; tree[p].<span class="built_in">size</span>(); ++i)</span><br><span class="line">        <span class="keyword">if</span> (tree[p][i].p != fa) &#123;</span><br><span class="line">            dfs(tree[p][i].p, p);</span><br><span class="line">            used[p] |= used[tree[p][i].p];</span><br><span class="line">            <span class="keyword">if</span> (used[tree[p][i].p] == <span class="literal">true</span>) &#123;</span><br><span class="line">                used[p] = <span class="literal">true</span>;</span><br><span class="line">                Node &amp;tmp = tree[p][i];</span><br><span class="line">                ll cost0 = (f[tmp.p][<span class="number">0</span>] + tmp.c0 * <span class="number">2</span>),</span><br><span class="line">                   cost1 =</span><br><span class="line">                       <span class="built_in">min</span>(f[tmp.p][<span class="number">0</span>] + tmp.c0 * <span class="number">2</span>, f[tmp.p][<span class="number">1</span>] + tmp.c1 * <span class="number">2</span>);</span><br><span class="line">                f[p][<span class="number">0</span>] += cost0, f[p][<span class="number">1</span>] += cost1;</span><br><span class="line">                <span class="comment">// 1、没车，一去不回的最优选择</span></span><br><span class="line">                min1 = <span class="built_in">min</span>(min1, -cost0 + f[tmp.p][<span class="number">2</span>] + tmp.c0);</span><br><span class="line">                <span class="comment">// 2、有车，带车一去不回的最优选择</span></span><br><span class="line">                min2 = <span class="built_in">min</span>(min2, -cost1 + f[tmp.p][<span class="number">4</span>] + tmp.c1);</span><br><span class="line">                <span class="comment">// 3、有车，找个地方把车丢了 人回来的最优和次优选择</span></span><br><span class="line">                ll tmp_min3 =</span><br><span class="line">                    -cost1 + <span class="built_in">min</span>(f[tmp.p][<span class="number">1</span>], f[tmp.p][<span class="number">3</span>]) + tmp.c1 + tmp.c0;</span><br><span class="line">                <span class="keyword">if</span> (tmp_min3 &lt; min3[<span class="number">0</span>].second) &#123;</span><br><span class="line">                    min3[<span class="number">1</span>] = min3[<span class="number">0</span>];</span><br><span class="line">                    min3[<span class="number">0</span>] = make_pair(i, tmp_min3);</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (tmp_min3 &lt; min3[<span class="number">1</span>].second) &#123;</span><br><span class="line">                    min3[<span class="number">1</span>] = make_pair(i, tmp_min3);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">// 3、有车，但是选择步行一去不回的最优选择</span></span><br><span class="line">                ll tmp_min4 = -cost1 + f[tmp.p][<span class="number">2</span>] + tmp.c0;</span><br><span class="line">                <span class="keyword">if</span> (tmp_min4 &lt; min4[<span class="number">0</span>].second) &#123;</span><br><span class="line">                    min4[<span class="number">1</span>] = min4[<span class="number">0</span>];</span><br><span class="line">                    min4[<span class="number">0</span>] = make_pair(i, tmp_min4);</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (tmp_min4 &lt; min4[<span class="number">1</span>].second) &#123;</span><br><span class="line">                    min4[<span class="number">1</span>] = make_pair(i, tmp_min4);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    f[p][<span class="number">2</span>] = f[p][<span class="number">0</span>] + min1;</span><br><span class="line">    f[p][<span class="number">3</span>] = f[p][<span class="number">1</span>] + min3[<span class="number">0</span>].second;</span><br><span class="line">    f[p][<span class="number">4</span>] = f[p][<span class="number">1</span>] + min2;</span><br><span class="line">    <span class="keyword">if</span> (min3[<span class="number">0</span>].first != min4[<span class="number">0</span>].first)</span><br><span class="line">        f[p][<span class="number">4</span>] = <span class="built_in">min</span>(f[p][<span class="number">4</span>], f[p][<span class="number">1</span>] + min3[<span class="number">0</span>].second + min4[<span class="number">0</span>].second);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        f[p][<span class="number">4</span>] = <span class="built_in">min</span>(f[p][<span class="number">4</span>], f[p][<span class="number">1</span>] + <span class="built_in">min</span>(min3[<span class="number">0</span>].second + min4[<span class="number">1</span>].second,</span><br><span class="line">                                             min3[<span class="number">1</span>].second + min4[<span class="number">0</span>].second));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>, u, v, p, q; i &lt; n; ++i) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d%d%d%d"</span>, &amp;u, &amp;v, &amp;p, &amp;q);</span><br><span class="line">        tree[u].push_back(Node(v, p, q));</span><br><span class="line">        tree[v].push_back(Node(u, p, q));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;m);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, u; i &lt; m; ++i) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;u);</span><br><span class="line">        used[u] = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    dfs(<span class="number">1</span>, <span class="number">-1</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%lld\n"</span>, f[<span class="number">1</span>][<span class="number">4</span>]);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+
     
 
     
@@ -261,16 +279,76 @@
 
 
     
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/02/16/算法总结02-树形DP/">展开全文 >></a>
-    </p>
+
     
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http:/2020/02/16/算法总结02-树形DP/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
 
     
     <div class="clearfix"></div>
   </div>
   </div>
 </article>
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/2020/02/10/算法总结01-单调栈/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">算法总结01-单调栈</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -285,515 +363,57 @@
         </div>
         
         
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-算法总结01-单调栈" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/02/10/算法总结01-单调栈/">算法总结01-单调栈</a>
-	
-    </h1>
-  
-
-
-  
-  
-<a href="/2020/02/10/算法总结01-单调栈/" class="archive-article-date">
-        <time datetime="2020-02-10T10:33:09.461Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-10</time>
-</a>
-
-  
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h3 id="裸题"><a href="#裸题" class="headerlink" title="裸题"></a>裸题</h3><p>给定序列 $a1$,$a2$…$an$，对于序列中的每个元素，求出其左边第一个比他小的元素的下标。</p>
-<p>求解算法为单调栈，核心代码如下：</p>
-    
-    <a class="article-more-a" href="/2020/02/10/算法总结01-单调栈/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">单调栈</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">教女朋友写代码</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/算法//" class="article-tag-list-link color3">算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/02/10/算法总结01-单调栈/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#口胡的原理"><span class="toc-number">1.</span> <span class="toc-text">口胡的原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#简单的例子"><span class="toc-number">2.</span> <span class="toc-text">简单的例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#复杂的例子"><span class="toc-number">3.</span> <span class="toc-text">复杂的例子</span></a></li></ol>
+                    </div>
+                </span>
             </div>
         </div>
         
-        
     </div>
 </aside>
 
 
 
 
-  
-    <article id="post-WSL" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/02/10/WSL/">WSL配置备份</a>
-	
-    </h1>
-  
 
 
-  
-  
-<a href="/2020/02/10/WSL/" class="archive-article-date">
-        <time datetime="2020-02-10T08:39:30.196Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-10</time>
-</a>
-
-  
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>WSL炸了一次，保留一份备份。</p>
-<ol>
-<li><p>zsh安装：</p>
-    
-    <a class="article-more-a" href="/2020/02/10/WSL/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">WSL</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/其他//" class="article-tag-list-link color3">其他</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/02/10/WSL/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
 
 
 
 
   
-    <article id="post-康复训练·后缀自动机" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/02/10/康复训练·后缀自动机/">康复训练·后缀自动机</a>
-	
-    </h1>
-  
-
-
-  
-  
-<a href="/2020/02/10/康复训练·后缀自动机/" class="archive-article-date">
-        <time datetime="2020-02-10T08:39:30.193Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-10</time>
-</a>
-
-  
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>后缀自动机 (suffix automaton SAM)，有穷状态自动机(deterministic finite automaton,DFA)的一种。</p>
-    
-    <a class="article-more-a" href="/2020/02/10/康复训练·后缀自动机/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Suffix Automaton</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">字符串</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/算法//" class="article-tag-list-link color3">算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/02/10/康复训练·后缀自动机/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
+     <div class="valine_comment"></div>
+<!--载入js，在</body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  var notify = 'false' == true ? true : false;
+  var verify = 'false' == true ? true : false;
+  new Valine({
+      // AV 对象来自上面引入av-min.js(老司机们不要开车➳♡゛扎心了老铁)
+      av: AV,
+      el: '.valine_comment',
+      emoticon_url: 'https://cloud.panjunwen.com/alu',
+      emoticon_list: ["狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","暗地观察.png"],
+      app_id: 'gYXstxHzsbAuNHIlGgkorqsj-MdYXbMMI',
+      app_key: '5jYS2A7zalDSTbBlcekGYK4F',
+      placeholder: 'Just go go'
+    });
+</script>
 
   
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/02/10/hello-world/">Hello World</a>
-	
-    </h1>
-  
 
-
-  
-  
-<a href="/2020/02/10/hello-world/" class="archive-article-date">
-        <time datetime="2020-02-10T08:39:30.163Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-10</time>
-</a>
-
-  
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-    
-    <a class="article-more-a" href="/2020/02/10/hello-world/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">test</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/test//" class="article-tag-list-link color5">test</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/02/10/hello-world/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-康复训练·舞蹈链" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/02/10/康复训练·舞蹈链/">康复训练·舞蹈链</a>
-	
-    </h1>
-  
-
-
-  
-  
-<a href="/2020/02/10/康复训练·舞蹈链/" class="archive-article-date">
-        <time datetime="2020-02-10T08:39:28.556Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-10</time>
-</a>
-
-  
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>dance link，针对精确覆盖问题和完全覆盖问题的优化，本质上优化的是搜索时回溯储存恢复的代价。</p>
-<p>精确覆盖和完全覆盖只是回溯时的条件不同，此处仅针对精确覆盖问题。</p>
-<h4 id="精确覆盖问题描述"><a href="#精确覆盖问题描述" class="headerlink" title="精确覆盖问题描述"></a>精确覆盖问题描述</h4><p>给定01矩阵$A$，试选取若干行构成一个新矩阵$B$，使得$B$中每列恰好只有一个1。</p>
-    
-    <a class="article-more-a" href="/2020/02/10/康复训练·舞蹈链/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">dance link</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">搜索</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">双向十字循环链表</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/算法//" class="article-tag-list-link color3">算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/02/10/康复训练·舞蹈链/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-  
 
 
           </div>
@@ -833,8 +453,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
