@@ -18,7 +18,7 @@
 <meta property="og:site_name" content="笙歌流转">
 <meta property="og:description" content="dance link，针对精确覆盖问题和完全覆盖问题的优化，本质上优化的是搜索时回溯储存恢复的代价。 精确覆盖和完全覆盖只是回溯时的条件不同，此处仅针对精确覆盖问题。 精确覆盖问题描述给定01矩阵$A$，试选取若干行构成一个新矩阵$B$，使得$B$中每列恰好只有一个1。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-02-16T14:44:52.241Z">
+<meta property="og:updated_time" content="2020-02-16T14:48:47.501Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="康复训练·舞蹈链">
 <meta name="twitter:description" content="dance link，针对精确覆盖问题和完全覆盖问题的优化，本质上优化的是搜索时回溯储存恢复的代价。 精确覆盖和完全覆盖只是回溯时的条件不同，此处仅针对精确覆盖问题。 精确覆盖问题描述给定01矩阵$A$，试选取若干行构成一个新矩阵$B$，使得$B$中每列恰好只有一个1。">
@@ -217,7 +217,7 @@
 <a id="more"></a> 
 
 <h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>回溯储存恢复主要依靠链表的del和resv操作，不难想象，当a、b、c、d依次删除时，d、c、b、a依次恢复结果是正确的，和dfs的栈顺序是对应的。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Delete</span><span class="params">(Linklist *i)</span></span>&#123;</span><br><span class="line">    i-&gt;prev-&gt;next=i-&gt;r,i-&gt;next-&gt;prev=i-&gt;prev;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Resume</span><span class="params">(Linklist* i)</span></span>&#123;</span><br><span class="line">    i-&gt;prev-&gt;next=i-&gt;next-&gt;prev=i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Delete</span><span class="params">(Linklist* i)</span> </span>&#123; i-&gt;prev-&gt;next = i-&gt;r, i-&gt;next-&gt;prev = i-&gt;prev; &#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Resume</span><span class="params">(Linklist* i)</span> </span>&#123; i-&gt;prev-&gt;next = i-&gt;next-&gt;prev = i; &#125;</span><br></pre></td></tr></table></figure>
 
 <p>基本思路就是dfs的暴力搜索，对于每一个要覆盖的列，枚举覆盖它使用的行即可。</p>
 <p>删除和恢复的原子操作都是以列进行的，即当前列直接关联的行。</p>
@@ -557,11 +557,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">WSL</a>
+                <a href="javascript:void(0)" class="js-tag color5">test</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">test</a>
+                <a href="javascript:void(0)" class="js-tag color4">WSL</a>
               </li>
              
               <li class="article-tag-list-item">
