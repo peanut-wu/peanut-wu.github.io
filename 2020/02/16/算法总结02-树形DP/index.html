@@ -18,7 +18,7 @@
 <meta property="og:site_name" content="笙歌流转">
 <meta property="og:description" content="口胡的原理通常树形DP的思路，是从递归的角度看，将子树看成一个子节点，从而将树上DP的问题转化为普通的线性DP；子树的信息通过后序遍历或者记忆化搜索（其实是一样的，写法不同）提供，避免重复计算。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-02-16T14:37:21.627Z">
+<meta property="og:updated_time" content="2020-02-16T14:40:36.565Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法总结02-树形DP">
 <meta name="twitter:description" content="口胡的原理通常树形DP的思路，是从递归的角度看，将子树看成一个子节点，从而将树上DP的问题转化为普通的线性DP；子树的信息通过后序遍历或者记忆化搜索（其实是一样的，写法不同）提供，避免重复计算。">
@@ -218,7 +218,7 @@
 <h3 id="简单的例子"><a href="#简单的例子" class="headerlink" title="简单的例子"></a>简单的例子</h3><ul>
 <li>题目链接：<a href="http://hihocoder.com/problemset/problem/1055" target="_blank" rel="noopener">http://hihocoder.com/problemset/problem/1055</a></li>
 <li>思路：将子树看成一个子节点后，就是一个分组背包的问题</li>
-<li>核心代码：<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    visited[i] = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; e[i].<span class="built_in">size</span>(); ++j)</span><br><span class="line">        <span class="keyword">if</span> (visited[e[i][j]] == <span class="literal">false</span>) &#123;</span><br><span class="line">            dfs(e[i][j]);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> vv = m - <span class="number">1</span>; vv &gt; <span class="number">0</span>; --vv)</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> k = m - <span class="number">1</span>; k &gt; <span class="number">0</span>; --k)</span><br><span class="line">                    <span class="keyword">if</span> (vv &gt;= k)</span><br><span class="line">                        dp[i][vv] =</span><br><span class="line">                            <span class="built_in">max</span>(dp[i][vv], dp[i][vv - k] + dp[e[i][j]][k]);</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> vv = m; vv &gt; <span class="number">0</span>; --vv) dp[i][vv] = dp[i][vv - <span class="number">1</span>] + v[i];</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li>核心代码：<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    visited[i] = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; e[i].<span class="built_in">size</span>(); ++j)</span><br><span class="line">        <span class="keyword">if</span> (visited[e[i][j]] == <span class="literal">false</span>) &#123;</span><br><span class="line">            dfs(e[i][j]);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> vv = m - <span class="number">1</span>; vv &gt; <span class="number">0</span>; --vv)</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> k = m - <span class="number">1</span>; k &gt; <span class="number">0</span>; --k)</span><br><span class="line">                    <span class="keyword">if</span> (vv &gt;= k)</span><br><span class="line">                        dp[i][vv] =</span><br><span class="line">                            <span class="built_in">max</span>(dp[i][vv], dp[i][vv - k] + dp[e[i][j]][k]);</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> vv = m; vv &gt; <span class="number">0</span>; --vv) dp[i][vv] = dp[i][vv - <span class="number">1</span>] + v[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
@@ -567,22 +567,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">单调栈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">教女朋友写代码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">DP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DFS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">test</a>
               </li>
              
@@ -604,6 +588,22 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">双向十字循环链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">单调栈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">教女朋友写代码</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">DP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DFS</a>
               </li>
             
             <div class="clearfix"></div>
